@@ -1,59 +1,38 @@
-from tkinter import *
 
-# Window oif the ap
-app = Tk()
-app.title('Compound interest calculator')
-app.geometry('800x500')
-
-# Equation for calculating interest rates
-def calc_amount(principal, interest_rate, compounding_frequency, time):
-    interest_amount = principal * (1 + (interest_rate / compounding_frequency)) ** (compounding_frequency * time)
-    return interest_amount
-
-def clear():
-    pass
+import tkinter as tk
+from functools import partial
 
 
-# UI
-# principal
-principal_text = StringVar()
-principal_label = Label(app, text="Principal Amount", font=('bold', 14), pady=20)
-principal_label.grid(row=0, column=0, sticky=W)
-principal_entry = Entry(app, textvariable=principal_text)
-principal_entry.grid(row=0, column=1)
-
-# Interest rate
-interest_text = StringVar()
-interest_label = Label(app, text="Interest rate(%)", font=('bold', 14))
-interest_label.grid(row=0, column=2, sticky=W)
-interest_entry = Entry(app, textvariable=interest_text)
-interest_entry.grid(row=0, column=3)
-
-# compounding frequency
-compound_text = StringVar()
-compound_label = Label(app, text="Compound Frequency", font=('bold', 14))
-compound_label.grid(row=1, column=0, sticky=W)
-compound_entry = Entry(app, textvariable=compound_text)
-compound_entry.grid(row=1, column=1)
-
-# Time
-time_text = StringVar()
-time_label = Label(app, text="Time for maturity", font=('bold', 14))
-time_label.grid(row=1, column=2, sticky=W)
-time_entry = Entry(app, textvariable=interest_text)
-time_entry.grid(row=1, column=3)
+def call_result(label_result, n1, n2, n3, n4):
+    principal = (n1.get())
+    interest_rate = (n2.get())
+    compounding_frequency = (n3.get())
+    time = (n4.get())
+    print(principal, interest_rate, compounding_frequency, time)
+    result = int(principal) * (1 + (int(interest_rate) / int(compounding_frequency))) ** (int(compounding_frequency) * int(time))
+    label_result.config(text="Result is %d" % result)
+    return
 
 
-# Buttons
-calculate_btn = Button(app, text='Calculate Amount After Maturity', width=24, command=calc_amount)
-calculate_btn.grid(row=2, column=1, pady=20)
+root = tk.Tk()
+root.geometry('700x500')
+root.title('Simple Calculator')
+number1 = tk.StringVar()
+number2 = tk.StringVar()
+number3 = tk.StringVar()
+number4 = tk.StringVar()
+labelTitle = tk.Label(root, text="Simple Calculator").grid(row=0, column=2)
+labelNum1 = tk.Label(root, text="Principal($)").grid(row=1, column=0)
+labelNum2 = tk.Label(root, text="Interest rate(%)").grid(row=2, column=0)
+labelNum3 = tk.Label(root, text="Compounding Frequency").grid(row=3, column=0)
+labelNum4 = tk.Label(root, text="Time To Maturity(Years)").grid(row=4, column=0)
+labelResult = tk.Label(root)
+labelResult.grid(row=7, column=2)
+entryNum1 = tk.Entry(root, textvariable=number1).grid(row=1, column=2)
+entryNum2 = tk.Entry(root, textvariable=number2).grid(row=2, column=2)
+entryNum3 = tk.Entry(root, textvariable=number3).grid(row=3, column=2)
+entryNum4 = tk.Entry(root, textvariable=number4).grid(row=4, column=2)
 
-clear_btn = Button(app, text='Clear Entries', width=24, command=clear)
-clear_btn.grid(row=2, column=2)
-
-
-
-
-
-# Starting the program
-app.mainloop()
+call_result = partial(call_result, labelResult, number1, number2, number3, number4)
+buttonCal = tk.Button(root, text="Calculate", command=call_result).grid(row=6, column=0)
+root.mainloop()
