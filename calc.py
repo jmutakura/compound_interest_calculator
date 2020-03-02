@@ -8,9 +8,8 @@ def call_result(label_result, n1, n2, n3, n4):
     interest_rate = (n2.get())
     compounding_frequency = (n3.get())
     time = (n4.get())
-    print(principal, interest_rate, compounding_frequency, time)
-    result = int(principal) * (1 + (int(interest_rate) / int(compounding_frequency))) ** (int(compounding_frequency) * int(time))
-    label_result.config(text="Result is %d" % result)
+    result = int(principal) * (1 + (float(interest_rate) / int(compounding_frequency))) ** (int(compounding_frequency) * int(time))
+    label_result.config(text=f"Your investment will be worth {result} after {time} years")
     return
 
 
